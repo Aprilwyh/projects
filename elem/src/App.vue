@@ -1,12 +1,19 @@
 <template>
-  <div id="app">
+  <div>
     <v-header></v-header>
-    <div class="tab">
-      <div class="tab-item">商品</div>
-      <div class="tab-item">评论</div>
-      <div class="tab-item">商家</div>
+    <div class="tab border-1px">
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+        <!-- <a v-link="{path: '/goods'}">商品</a> -->
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评论</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
     </div>
-    <div class="content"></div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -22,14 +29,37 @@ export default {
 </script>
 
 <style>
-#app .tab {
+.tab {
   display: flex;
   width: 100%;
   height: 40px;
   line-height: 40px;
 }
-#app .tab .tab-item {
+.tab .tab-item {
   flex: 1;
   text-align: center;
 }
+.tab .tab-item a {
+  /* 设置成块级元素是为了让a不止被内容撑开，点击别处也可跳转路由 */
+  display: block;
+  font-size: 14px;
+  color: rgb(77, 85, 93);
+}
+.tab .tab-item .router-link-active {
+  color: rgb(240, 20, 20);
+}
+/* .tab {
+  position: relative;
+}
+.tab::after {
+  content: '';
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  border-top: 1px solid #000;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+} */
+
 </style>

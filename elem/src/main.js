@@ -4,6 +4,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 
+import './common/css/index.css'; // 批量引入css样式文件
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

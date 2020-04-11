@@ -1,0 +1,14 @@
+/* 移动端下边框1px */
+.border-1px {
+  position: relative;
+}
+.border-1px::after {
+  content: '';
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  border-top: 1px solid #000;
+  transform: scaleY(0.5);
+  -webkit-transform: scaleY(0.5);
+}
