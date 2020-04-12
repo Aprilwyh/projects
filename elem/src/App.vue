@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-header></v-header>
+    <v-header :seller="this.seller"></v-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <router-link to="/goods">商品</router-link>
@@ -22,8 +22,19 @@
 import header from './components/header/header.vue';
 export default {
   name: 'App',
+  data() {
+    return {
+      seller: {}
+    };
+  },
   components: {
     'v-header': header
+  },
+  mounted() {
+    this.$axios.get('../api/data.json').then((result) => {
+      console.log(result);
+      this.seller = result.data.seller;
+    });
   }
 };
 </script>

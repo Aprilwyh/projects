@@ -1,3 +1,7 @@
+body {
+  font-weight: 200;
+  font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial,sans-serif
+}
 /* 移动端下边框1px */
 .border-1px {
   position: relative;
@@ -11,4 +15,24 @@
   border-top: 1px solid #000;
   transform: scaleY(0.5);
   -webkit-transform: scaleY(0.5);
+}
+
+/*默认大小*/
+.photo {width:100px;height:100px;}
+.photo {background-image: url();}
+/* 如果设备像素大于等于2，则用2倍图 */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min--moz-device-pixel-ratio: 2) {
+  .photo {
+    background-image: url();
+    background-size: 100px 100px;
+  }
+}
+/* 如果设备像素大于等于3，则用3倍图 */
+@media screen and (-webkit-min-device-pixel-ratio: 3),
+screen and (min--moz-device-pixel-ratio: 3) {
+  .photo {
+    background-image: url();
+    background-size: 100px 100px;
+  }
 }

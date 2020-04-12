@@ -26,6 +26,8 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // semi分号，强制有分号，没有会报错
-    'semi': ['error', 'always']
+    'semi': ['error', 'always'],
+    // 配置为0意味着不去检测它，这个是检测mounted ()中间要有个空格的
+    'space-before-function-paren': 0
   }
 }
