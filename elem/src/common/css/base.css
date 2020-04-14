@@ -2,6 +2,18 @@ body {
   font-weight: 200;
   font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', Arial,sans-serif
 }
+/* 清除浮动 */
+.clearfix {
+  display: inline-block;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  height: 0;
+  line-height: 0;
+  clear: both;
+  visibility: hidden;
+}
 /* 移动端下边框1px */
 .border-1px {
   position: relative;

@@ -21,13 +21,13 @@
           <span class="text">{{ seller.supports[0].description }}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail(true)">
         <span class="count">{{ seller.supports.length }}个</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
     <!-- 公告区 -->
-    <div class="bulletin">
+    <div class="bulletin" @click="showDetail(true)">
       <span class="title"></span><span class="text">{{ seller.bulletin }}</span>
       <i class="icon-keyboard_arrow_right"></i>
     </div>
@@ -35,152 +35,209 @@
     <div class="background">
       <img :src="seller.avatar" alt="背景图片" width="100%" height="200%">
     </div>
+    <!-- 详情弹出层 -->
+    <div class="detail" v-show="detailShow">
+      <div class="container clearfix">
+        <div class="content">
+          <h1 class="name">{{ seller.name }}</h1>
+          <star :size="seller.ratingCount" :score="seller.score"></star>
+        </div>
+      </div>
+      <div class="footer" @click="showDetail(false)">
+        <i class="icon-close"></i>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+// 引入star组件
+import star from '../star/star.vue';
 // 导出该组件
 export default {
   data() {
-    return {};
+    return {
+      detailShow: false
+    };
+  },
+  methods: {
+    showDetail(flag) {
+      this.detailShow = flag;
+    }
   },
   props: ['seller'],
   created() {
     // 动态展示不同的class
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+  },
+  components: {
+    star
   }
 };
 </script>
-<style>
+<style lang="less">
 .header {
   color: #fff;
   background-color: rgba(7, 17, 27, 0.5);
   position: relative;
-}
-.main-content {
-  padding: 24px 12px 18px 24px;
-  font-size: 0px;
-  position: relative;
-}
-.main-content .avatar,
-.main-content .content {
-  display: inline-block;
-}
-.main-content .avatar img {
-  border-radius: 4px;
-}
-.main-content .content {
-  margin-left: 16px;
-  vertical-align: bottom;
-}
-.main-content .content .title {
-  margin: 2px 0px 8px 0px;
-}
-.main-content .content .title .brand {
-  display: inline-block;
-  width: 30px;
-  height: 18px;
-  background-image: url('./brand@2x.png');
-  background-size: 30px 18px;
-  background-repeat: no-repeat;
-}
-.main-content .content .title .name {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 18px;
-  margin-left: 6px;
-  vertical-align: bottom;
-}
-.main-content .content .description {
-  font-size: 12px;
-  line-height: 12px;
-}
-.main-content .content .support {
-  font-size: 10px;
-  margin: 10px 0px 2px 0px;
-}
-.main-content .content .support .icon {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin-right: 4px;
-  background-size: 12px 12px;
-  background-repeat: no-repeat;
-  vertical-align: bottom;
-}
-.main-content .content .support .decrease {
-  background-image: url('./decrease_1@2x.png');
-}
-.main-content .content .support .discount {
-  background-image: url('./discount_1@2x.png');
-}
-.main-content .content .support .guarantee {
-  background-image: url('./guarantee_1@2x.png');
-}
-.main-content .content .support .invoice {
-  background-image: url('./invoice_1@2x.png');
-}
-.main-content .content .support .special {
-  background-image: url('./special_1@2x.png');
-}
-.main-content .support-count {
-  background-color: rgba(0, 0, 0, .2);
-  height: 24px;
-  line-height: 24px;
-  position: absolute;
-  right: 12px;
-  bottom: 14px;
-  padding: 0 8px;
-  border-radius: 14px;
-  text-align: center;
-}
-.main-content .support-count .count,
-.main-content .support-count .icon-keyboard_arrow_right {
-  vertical-align: middle;
-  line-height: 24px;
-  font-size: 10px;
-}
-.main-content .support-count .icon-keyboard_arrow_right {
-  margin-left: 2px;
-}
-.header .bulletin {
-  height: 28px;
-  line-height: 28px;
-  background-color: rgba(7, 17, 27, .2);
-  padding: 0 22px 0 12px;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-}
-.header .bulletin .title {
-  display: inline-block;
-  width: 22px;
-  height: 12px;
-  background-image: url('./bulletin@2x.png');
-  background-size: 22px 12px;
-  background-repeat: no-repeat;
-}
-.header .bulletin .text {
-  font-size: 10px;
-  margin: 0 4px;
-  vertical-align: middle;
-}
-.header .bulletin .icon-keyboard_arrow_right {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
-}
-.header .background {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  filter: blur(10px);
-  overflow: hidden;
+  .main-content {
+    padding: 24px 12px 18px 24px;
+    font-size: 0px;
+    position: relative;
+    .avatar,
+    .content {
+      display: inline-block;
+    }
+    .avatar img {
+      border-radius: 4px;
+    }
+    .content {
+      margin-left: 16px;
+      vertical-align: bottom;
+      .title {
+        margin: 2px 0px 8px 0px;
+        .brand {
+          display: inline-block;
+          width: 30px;
+          height: 18px;
+          background-image: url('./brand@2x.png');
+          background-size: 30px 18px;
+          background-repeat: no-repeat;
+        }
+        .name {
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 18px;
+          margin-left: 6px;
+          vertical-align: bottom;
+        }
+      }
+      .description {
+        font-size: 12px;
+        line-height: 12px;
+      }
+      .support {
+        font-size: 10px;
+        margin: 10px 0px 2px 0px;
+        .icon {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          margin-right: 4px;
+          background-size: 12px 12px;
+          background-repeat: no-repeat;
+          vertical-align: bottom;
+        }
+        .decrease {
+          background-image: url('./decrease_1@2x.png');
+        }
+        .discount {
+          background-image: url('./discount_1@2x.png');
+        }
+        .guarantee {
+          background-image: url('./guarantee_1@2x.png');
+        }
+        .invoice {
+          background-image: url('./invoice_1@2x.png');
+        }
+        .special {
+          background-image: url('./special_1@2x.png');
+        }
+      }
+    }
+    .support-count {
+      background-color: rgba(0, 0, 0, .2);
+      height: 24px;
+      line-height: 24px;
+      position: absolute;
+      right: 12px;
+      bottom: 14px;
+      padding: 0 8px;
+      border-radius: 14px;
+      text-align: center;
+      .count,
+      .icon-keyboard_arrow_right {
+        vertical-align: middle;
+        line-height: 24px;
+        font-size: 10px;
+      }
+      .icon-keyboard_arrow_right {
+        margin-left: 2px;
+      }
+    }
+  }
+  .bulletin {
+    height: 28px;
+    line-height: 28px;
+    background-color: rgba(7, 17, 27, .2);
+    padding: 0 22px 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    .title {
+      display: inline-block;
+      width: 22px;
+      height: 12px;
+      background-image: url('./bulletin@2x.png');
+      background-size: 22px 12px;
+      background-repeat: no-repeat;
+    }
+    .text {
+      font-size: 10px;
+      margin: 0 4px;
+      vertical-align: middle;
+    }
+    .icon-keyboard_arrow_right {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+    }
+  }
+  .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+  }
+  .detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(7, 17, 27, .8);
+    .container {
+      min-height: 99%;
+      color: #fff;
+      width: 100%;
+      text-align: center;
+      .content {
+        margin-top: 64px;
+        padding-bottom: 64px;
+        .name {
+          line-height: 16px;
+          font-weight: 700;
+          font-size: 16px;
+        }
+      }
+    }
+    .footer {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      margin: -64px auto 0 auto;
+      clear: both;
+      font-size: 32px;
+    }
+  }
 }
 </style>
