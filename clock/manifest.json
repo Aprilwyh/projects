@@ -224,11 +224,6 @@
                 "ad" : {}
             }
         },
-        "launchwebview" : {
-            "statusbar" : {
-                "background" : "rgba(0,0,0,.8)"
-            }
-        },
         "statusbar" : {
             "immersed" : true
         }

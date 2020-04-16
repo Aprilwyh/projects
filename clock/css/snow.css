@@ -1,0 +1,5 @@
+.snow {
+	background-color: #000000;
+	position: absolute;
+	z-index: -999;
+}
