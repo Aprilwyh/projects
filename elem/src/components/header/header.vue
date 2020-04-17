@@ -36,38 +36,40 @@
       <img :src="seller.avatar" alt="背景图片" width="100%" height="200%">
     </div>
     <!-- 详情弹出层 -->
-    <div class="detail" v-show="detailShow">
-      <div class="container clearfix">
-        <div class="content">
-          <h1 class="name">{{ seller.name }}</h1>
-          <div class="stars">
-            <star :size="seller.ratingCount" :score="seller.score"></star>
-          </div>
-          <div class="title">
-            <div class="line"></div>
-            <div class="text">优惠信息</div>
-            <div class="line"></div>
-          </div>
-          <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-for="(item, index) in seller.supports" :key="item.index">
-              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
-              <span class="text">{{ seller.supports[index].description}}</span>
-            </li>
-          </ul>
-          <div class="title">
-            <div class="line"></div>
-            <div class="text">商家公告</div>
-            <div class="line"></div>
-          </div>
-          <div class="bulletin-inner">
-            <p class="content-inner">{{ seller.bulletin }}</p>
+    <transition name="fade">
+      <div class="detail" v-show="detailShow">
+        <div class="container clearfix">
+          <div class="content">
+            <h1 class="name">{{ seller.name }}</h1>
+            <div class="stars">
+              <star :size="seller.ratingCount" :score="seller.score"></star>
+            </div>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="(item, index) in seller.supports" :key="item.index">
+                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <span class="text">{{ seller.supports[index].description}}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">商家公告</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin-inner">
+              <p class="content-inner">{{ seller.bulletin }}</p>
+            </div>
           </div>
         </div>
+        <div class="footer" @click="showDetail(false)">
+          <i class="icon-close"></i>
+        </div>
       </div>
-      <div class="footer" @click="showDetail(false)">
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -236,7 +238,17 @@ export default {
     width: 100%;
     height: 100%;
     overflow: auto;
+    backdrop-filter: blur(10px);
     background: rgba(7, 17, 27, .8);
+    &.fade-enter-active, &.fade-leave-active {
+      transition: all .5s;
+    }
+    &.fade-enter, &.fade-leave-to {
+      opacity: 0;
+    }
+    &.fade-enter-to, &.fade-leave {
+      opacity: 1;
+    }
     .container {
       min-height: 99%;
       color: #fff;
