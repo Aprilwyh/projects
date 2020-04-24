@@ -46,6 +46,9 @@ export default {
   height: 40px;
   line-height: 40px;
 }
+.border-1px::after {
+  border-top: 1px solid #000;
+}
 .tab .tab-item {
   flex: 1;
   text-align: center;
