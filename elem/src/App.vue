@@ -47,7 +47,7 @@ export default {
   line-height: 40px;
 }
 .border-1px::after {
-  border-top: 1px solid #000;
+  border-top: 1px solid rgba(7, 17, 27, .1);;
 }
 .tab .tab-item {
   flex: 1;
