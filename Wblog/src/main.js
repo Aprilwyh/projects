@@ -8,6 +8,7 @@ import router from './router'
 
 Vue.config.productionTip = false
 import '../src/css/base.css'; // 全局应用样式
+import 'font-awesome/css/font-awesome.min.css'
 
 Vue.use(ElementUI)
 /* eslint-disable no-new */
