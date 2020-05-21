@@ -1,9 +1,7 @@
 <template>
   <div class="container">
     <el-row type="flex" class="row-bg">
-      <el-col :span="16">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
+      <el-col :span="16"></el-col>
       <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
@@ -31,7 +29,6 @@
 <style lang="less" scoped>
 .container {
   background-color: #f5f5f5;
-  height: calc(100vh);
   padding: 15px 5%;
   .box-card {
     margin-top: 15px;

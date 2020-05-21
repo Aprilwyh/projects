@@ -24,11 +24,22 @@
     </div>
     <div class="bar-con">
       <el-tabs v-model="activeName" @tab-click="handleClick" class="bar main">
-        <el-tab-pane label="首页" name="first"></el-tab-pane>
-        <el-tab-pane label="提问" name="second">提问</el-tab-pane>
-        <el-tab-pane label="分享" name="third">分享</el-tab-pane>
-        <el-tab-pane label="讨论" name="fourth">讨论</el-tab-pane>
-        <el-tab-pane label="建议" name="fifth">建议</el-tab-pane>
+        <el-tab-pane label="首页" name="first">
+          <v-content :activeName="this.activeName"></v-content>
+        </el-tab-pane>
+        <el-tab-pane label="提问" name="second">
+          <v-content :activeName="this.activeName"></v-content>
+        </el-tab-pane>
+        <el-tab-pane label="分享" name="third">
+          <v-content :activeName="this.activeName"></v-content>
+        </el-tab-pane>
+        <el-tab-pane label="讨论" name="fourth">
+          <v-content :activeName="this.activeName"></v-content>
+        </el-tab-pane>
+        <el-tab-pane label="建议" name="fifth">
+          <v-content :activeName="this.activeName"></v-content>
+        </el-tab-pane>
+        <el-tab-pane label="|"></el-tab-pane>
         <el-tab-pane label="我发表的贴" name="seventh">我发表的贴</el-tab-pane>
         <el-tab-pane label="我收藏的贴" name="eighth">我收藏的贴</el-tab-pane>
       </el-tabs>
@@ -39,6 +50,7 @@
 </template>
 
 <script>
+import content from "./content.vue";
 export default {
   name: "HelloWorld",
   data() {
@@ -50,6 +62,9 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     }
+  },
+  components: {
+    "v-content": content
   }
 };
 </script>
