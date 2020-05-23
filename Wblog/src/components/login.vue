@@ -38,5 +38,16 @@ export default {
     border-bottom: none;
     font-size: 18px;
   }
+  /deep/ .el-tabs__item {
+    margin-left: 30px;
+    padding: 0 30px;
+  }
+  /deep/ .el-tabs__item:last-child {
+    margin-left: 0px;
+  }
+  /deep/ .el-tabs__active-bar {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
 }
 </style>

@@ -7,7 +7,7 @@
         <el-tab-pane label="分享" name="third"></el-tab-pane>
         <el-tab-pane label="讨论" name="fourth"></el-tab-pane>
         <el-tab-pane label="建议" name="fifth"></el-tab-pane>
-        <el-tab-pane label="|"></el-tab-pane>
+        <el-tab-pane label="|" disabled="true"></el-tab-pane>
         <el-tab-pane label="我发表的贴" name="seventh">我发表的贴</el-tab-pane>
         <el-tab-pane label="我收藏的贴" name="eighth">我收藏的贴</el-tab-pane>
       </el-tabs>
@@ -27,12 +27,14 @@
           </div>
           <div>
             <el-card class="box-card">
-              <el-tabs v-model="active" @tab-click="handleClick">
-                <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-              </el-tabs>
+              <div slot="header" class="clearfix">
+                <el-tabs v-model="active" @tab-click="handleClick">
+                  <el-tab-pane label="综合" name="first"></el-tab-pane>
+                  <el-tab-pane label="未结" name="second"></el-tab-pane>
+                  <el-tab-pane label="已结" name="third"></el-tab-pane>
+                  <el-tab-pane label="精华" name="fourth"></el-tab-pane>
+                </el-tabs>
+              </div>
             </el-card>
           </div>
         </el-col>
@@ -104,6 +106,11 @@ export default {
           font-weight: 700;
           color: #303133;
         }
+        #tab-5,
+        #tab-5:hover {
+          color: #ddd;
+          font-weight: 100;
+        }
       }
     }
     i,
@@ -129,6 +136,35 @@ export default {
     }
     .box-card {
       margin-top: 15px;
+      /deep/ .el-tabs__header {
+        margin: 0px !important;
+        .el-tabs__nav-wrap::after {
+          height: 0px;
+        }
+        /deep/ .el-tabs__active-bar {
+          height: 0px;
+        }
+        /deep/ .el-tabs__item {
+          height: 0px;
+          line-height: 0px;
+          padding: 0 45px 0 0;
+          &::after {
+            content: "|";
+            color: #ddd;
+            position: absolute;
+            left: 50px;
+            font-weight: 100;
+          }
+          &:last-child::after {
+            content: "";
+          }
+        }
+        /deep/ .el-tabs__item:hover,
+        /deep/ .el-tabs__item.is-active {
+          font-weight: 700;
+          color: #303133;
+        }
+      }
     }
   }
 }
