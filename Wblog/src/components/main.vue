@@ -7,7 +7,7 @@
         <el-tab-pane label="分享" name="third"></el-tab-pane>
         <el-tab-pane label="讨论" name="fourth"></el-tab-pane>
         <el-tab-pane label="建议" name="fifth"></el-tab-pane>
-        <el-tab-pane label="|" disabled="true"></el-tab-pane>
+        <el-tab-pane label="|" disabled></el-tab-pane>
         <el-tab-pane label="我发表的贴" name="seventh">我发表的贴</el-tab-pane>
         <el-tab-pane label="我收藏的贴" name="eighth">我收藏的贴</el-tab-pane>
       </el-tabs>

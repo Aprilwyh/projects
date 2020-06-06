@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "header"
+  name: "myHeader"
 };
 </script>
 
@@ -66,6 +66,9 @@ export default {
           color: #fff;
           display: inline-block;
         }
+        a:hover {
+          text-shadow: 0 0 5px #000;
+        }
       }
       .user {
         line-height: 60px;
@@ -75,6 +78,10 @@ export default {
           margin: 0 6px;
           color: #fff;
           display: inline-block;
+        }
+        i:hover,
+        a:hover {
+          color: rgba(0, 0, 0, 0.3);
         }
         i {
           font-size: 22px;
