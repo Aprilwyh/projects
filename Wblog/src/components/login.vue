@@ -9,10 +9,15 @@
     size="small"
   >
     <el-form-item label="邮箱" prop="email">
-      <el-input v-model="ruleForm.email"></el-input>
+      <el-input v-model="ruleForm.email" @keyup.enter.native="submitForm"></el-input>
     </el-form-item>
-    <el-form-item label="密码" prop="pass">
-      <el-input type="password" v-model="ruleForm.pass" auto-complete="off"></el-input>
+    <el-form-item label="密码" prop="password">
+      <el-input
+        type="password"
+        v-model="ruleForm.password"
+        auto-complete="off"
+        @keyup.enter.native="submitForm"
+      ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
@@ -31,7 +36,7 @@ export default {
     return {
       ruleForm: {
         email: "",
-        pass: ""
+        password: ""
       },
       rules: {
         email: [
@@ -42,7 +47,7 @@ export default {
             trigger: "blur,change"
           }
         ],
-        pass: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
   },
@@ -50,12 +55,27 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.login();
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    login() {
+      this.$axios
+        .post("/login", this.ruleForm)
+        .then(function(response) {
+          if (response && response.data) {
+            // 成功
+            if (response.data.status === 1) {
+            } else {
+              // 失败
+              alert(response.data.msg);
+            }
+          }
+        })
+        .catch(function(error) {});
     }
   },
   components: {}

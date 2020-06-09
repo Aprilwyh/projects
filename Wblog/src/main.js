@@ -5,16 +5,20 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 import '../src/css/base.css'; // 全局应用样式
 import 'font-awesome/css/font-awesome.min.css'
 
 Vue.use(ElementUI)
+Vue.prototype.$axios = axios
+axios.defaults.baseURL = '/api'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  axios,
   components: { App },
   template: '<App/>'
 })
