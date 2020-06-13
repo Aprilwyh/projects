@@ -9,6 +9,8 @@
     size="small"
   >
     <el-form-item label="邮箱" prop="email">
+      <!--@keyup.enter点击键盘的enter触发事件-->
+      <!-- .native: 注册事件，给组件的根元素注册事件 -->
       <el-input v-model="ruleForm.email" @keyup.enter.native="submitForm"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
@@ -35,8 +37,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        email: "",
-        password: ""
+        email: "admin@qq.com",
+        password: "123"
       },
       rules: {
         email: [
@@ -47,7 +49,10 @@ export default {
             trigger: "blur,change"
           }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, message: "密码长度至少需要6位", trigger: "change" }
+        ]
       }
     };
   },
@@ -55,7 +60,19 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.login();
+          this.$axios("/login").then(res => {
+            let lg = res.data[0];
+            if (
+              lg.email === this.ruleForm.email &&
+              lg.password == this.ruleForm.password
+            ) {
+              localStorage.setItem("myToken", lg.email);
+              this.$message.success("登录成功");
+              this.$router.push("homeMain");
+            } else {
+              this.$message.error("账号或者密码错误");
+            }
+          });
         } else {
           console.log("error submit!!");
           return false;

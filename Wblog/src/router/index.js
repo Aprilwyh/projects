@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import main from '@/components/main'
-import login from '@/components/container'
+// 同步加载
+// import main from '@/components/main'
+// import login from '@/components/container'
+// 异步加载
+const main = () => import('@/components/main')
+const login = () => import('@/components/container')
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -19,7 +24,16 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: login,
+      beforeEach: (to, from, next) => {
+        // 获取是否有token
+        let token = localStorage.getItem('myToken')
+        if (to.path === '/login' || token) {
+          next()
+        } else {
+          next('/login')
+        }
+      }
     },
     {
       path: '/register',
