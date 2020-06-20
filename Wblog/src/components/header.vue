@@ -14,7 +14,8 @@
           </div>
         </el-col>
         <el-col :span="5">
-          <div class="user">
+          <div v-if="myToken && myToken !== 'undefined'">user</div>
+          <div class="user" v-else>
             <i class="fa fa-user-circle-o"></i>
             <router-link :to="{path:'./login'}">登录</router-link>
             <router-link :to="{path:'./register'}">注册</router-link>
@@ -30,7 +31,12 @@
 
 <script>
 export default {
-  name: "myHeader"
+  name: "myHeader",
+  data() {
+    return {
+      myToken: localStorage.getItem("myToken")
+    };
+  }
 };
 </script>
 

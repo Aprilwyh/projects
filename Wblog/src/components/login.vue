@@ -38,7 +38,7 @@ export default {
     return {
       ruleForm: {
         email: "admin@qq.com",
-        password: "123"
+        password: "123456"
       },
       rules: {
         email: [
@@ -60,19 +60,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios("/login").then(res => {
-            let lg = res.data[0];
-            if (
-              lg.email === this.ruleForm.email &&
-              lg.password == this.ruleForm.password
-            ) {
-              localStorage.setItem("myToken", lg.email);
-              this.$message.success("登录成功");
-              this.$router.push("homeMain");
-            } else {
-              this.$message.error("账号或者密码错误");
-            }
-          });
+          this.login();
         } else {
           console.log("error submit!!");
           return false;
@@ -82,17 +70,22 @@ export default {
     login() {
       this.$axios
         .post("/login", this.ruleForm)
-        .then(function(response) {
-          if (response && response.data) {
-            // 成功
-            if (response.data.status === 1) {
-            } else {
-              // 失败
-              alert(response.data.msg);
-            }
+        .then(response => {
+          // 成功
+          console.log(response);
+          if (response.data.status === 0) {
+            localStorage.setItem("myToken", response.data.data.token);
+            this.$message({
+              message: "登录成功",
+              type: "success"
+            });
+            this.$router.push("home"); // 登录成功后跳转至首页
+          } else {
+            // 失败
+            this.$message.error("账号或者密码错误");
           }
         })
-        .catch(function(error) {});
+        .catch(error => {});
     }
   },
   components: {}

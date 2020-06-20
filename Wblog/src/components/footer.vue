@@ -3,7 +3,7 @@
     <p>
       <a href="#">广告位</a>
       <span>2020 &copy;</span>
-      <span>作者: April / binM</span>
+      <span>作者: April / binmma</span>
     </p>
     <p>
       <a href="http://www.markerhub.com:8082/" target="_blank">创意源</a>

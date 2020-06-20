@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { //此处并非和url一致
-        target: 'http://192.168.1.11:8888/', // 后台访问地址
+        target: 'http://192.168.1.12:8080/', // 后台访问地址
         changeOrigin: true,  // 允许跨域
         pathRewrite: {
           '^/api': '' // 外面的api只是一个区分请求的别名，所以这里的api目的是匹配上再给去掉
@@ -21,7 +21,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    useLocalIp: true, // 将host设置为0.0.0.0需要加这项配置
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
