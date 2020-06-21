@@ -22,7 +22,7 @@
       ></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')" :loading="loading">立即登录</el-button>
       <span>忘记密码?</span>
     </el-form-item>
     <el-form-item>
@@ -53,40 +53,52 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 6, message: "密码长度至少需要6位", trigger: "change" }
         ]
-      }
+      },
+      loading: false
     };
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.login();
+        if (valid && !this.loading) {
+          this.loading = true;
+          this.$store
+            .dispatch("userLogin", this.ruleForm)
+            .then(() => {
+              this.loading = false;
+              this.$message({
+                message: "登录成功",
+                type: "success"
+              });
+              this.$router.push("home");
+            })
+            .catch(response => {
+              this.loading = false;
+              this.$message.error("账号或者密码错误");
+            });
         } else {
           console.log("error submit!!");
           return false;
         }
       });
-    },
-    login() {
-      this.$axios
-        .post("/login", this.ruleForm)
-        .then(response => {
-          // 成功
-          console.log(response);
-          if (response.data.status === 0) {
-            localStorage.setItem("myToken", response.data.data.token);
-            this.$message({
-              message: "登录成功",
-              type: "success"
-            });
-            this.$router.push("home"); // 登录成功后跳转至首页
-          } else {
-            // 失败
-            this.$message.error("账号或者密码错误");
-          }
-        })
-        .catch(error => {});
     }
+    /* login() {
+      this.$axios.post("/login", this.ruleForm).then(response => {
+        // 成功
+        console.log(response);
+        if (response.data.status === 0) {
+          localStorage.setItem("myToken", response.data.data.token);
+          this.$message({
+            message: "登录成功",
+            type: "success"
+          });
+          this.$router.push("home"); // 登录成功后跳转至首页
+        } else {
+          // 失败
+          this.$message.error("账号或者密码错误");
+        }
+      });
+    } */
   },
   components: {}
 };

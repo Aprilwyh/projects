@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import store from './store'
 
 Vue.config.productionTip = false
 import '../src/css/base.css'; // 全局应用样式
@@ -19,6 +20,7 @@ new Vue({
   el: '#app',
   router,
   axios,
+  store,
   components: { App },
   template: '<App/>'
 })

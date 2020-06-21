@@ -14,7 +14,19 @@
           </div>
         </el-col>
         <el-col :span="5">
-          <div v-if="myToken && myToken !== 'undefined'">user</div>
+          <div class="avatar" v-if="$store.getters.token">
+            <span>欢迎你，{{ $store.getters.username }}</span>
+            <el-dropdown @command="logout">
+              <img :src="avatarDef" width="50px" height="50px" />
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>个人资料</el-dropdown-item>
+                <el-dropdown-item>我的帖子</el-dropdown-item>
+                <el-dropdown-item>我的评论</el-dropdown-item>
+                <el-dropdown-item>@我的</el-dropdown-item>
+                <el-dropdown-item divided command="logout">注销</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
           <div class="user" v-else>
             <i class="fa fa-user-circle-o"></i>
             <router-link :to="{path:'./login'}">登录</router-link>
@@ -34,8 +46,20 @@ export default {
   name: "myHeader",
   data() {
     return {
-      myToken: localStorage.getItem("myToken")
+      avatarDef: require("../assets/avatar-def.jpg") // 获取默认头像
     };
+  },
+  methods: {
+    logout(command) {
+      if (command === "logout") {
+        this.$store.dispatch("logout").then(() => {
+          this.$message({
+            message: "您已注销",
+            type: "success"
+          });
+        });
+      }
+    }
   }
 };
 </script>
@@ -74,6 +98,22 @@ export default {
         }
         a:hover {
           text-shadow: 0 0 5px #000;
+        }
+      }
+      .avatar {
+        span {
+          position: absolute;
+          right: 70px;
+          bottom: 10px;
+        }
+        .el-dropdown {
+          position: absolute;
+          right: 0;
+          top: 5px;
+          img {
+            border-radius: 50%;
+            cursor: pointer;
+          }
         }
       }
       .user {
