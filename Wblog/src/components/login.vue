@@ -72,9 +72,10 @@ export default {
               });
               this.$router.push("home");
             })
-            .catch(response => {
+            .catch(err => {
               this.loading = false;
               this.$message.error("账号或者密码错误");
+              // this.$message.error(err);
             });
         } else {
           console.log("error submit!!");

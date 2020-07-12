@@ -20,3 +20,11 @@ export function setUser(username) {
   // return sessionStorage.setItem("username", username);
   return localStorage.setItem("username", username);
 }
+
+export function setAvatar(avatar) {
+  return localStorage.setItem(avatar, avatar)
+}
+
+export function getAvatar(avatar) {
+  return localStorage.getItem(avatar, avatar)
+}

@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="15">
           <div class="home">
-            <router-link :to="{path: './home'}">
+            <router-link :to="{path: '/home'}">
               <i class="el-icon-location-outline"></i>
               主页
             </router-link>
@@ -16,21 +16,24 @@
         <el-col :span="5">
           <div class="avatar" v-if="$store.getters.token">
             <span>欢迎你，{{ $store.getters.username }}</span>
-            <el-dropdown @command="logout">
-              <img :src="avatarDef" width="50px" height="50px" />
+            <el-dropdown @command="select">
+              <img :src="$store.getters.avatar" width="40px" height="40px" />
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人资料</el-dropdown-item>
-                <el-dropdown-item>我的帖子</el-dropdown-item>
-                <el-dropdown-item>我的评论</el-dropdown-item>
-                <el-dropdown-item>@我的</el-dropdown-item>
+                <el-dropdown-item command="settings">
+                  <i class="el-icon-setting"></i>
+                  基本设置
+                </el-dropdown-item>
+                <el-dropdown-item command>我的帖子</el-dropdown-item>
+                <el-dropdown-item command>我的评论</el-dropdown-item>
+                <el-dropdown-item command>@我的</el-dropdown-item>
                 <el-dropdown-item divided command="logout">注销</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
           <div class="user" v-else>
             <i class="fa fa-user-circle-o"></i>
-            <router-link :to="{path:'./login'}">登录</router-link>
-            <router-link :to="{path:'./register'}">注册</router-link>
+            <router-link :to="{path:'/login'}">登录</router-link>
+            <router-link :to="{path:'/register'}">注册</router-link>
             <i class="fa fa-qq"></i>
             <i class="fa fa-weibo"></i>
           </div>
@@ -50,15 +53,28 @@ export default {
     };
   },
   methods: {
-    logout(command) {
-      if (command === "logout") {
-        this.$store.dispatch("logout").then(() => {
-          this.$message({
-            message: "您已注销",
-            type: "success"
-          });
-        });
+    select(command) {
+      switch (command) {
+        case "logout":
+          this.logout();
+          break;
+        case "settings":
+          this.settings();
+          break;
       }
+    },
+    // 注销
+    logout() {
+      this.$store.dispatch("logout").then(() => {
+        this.$message({
+          message: "您已注销",
+          type: "success"
+        });
+      });
+    },
+    // 基本设置
+    settings() {
+      this.$router.push({ path: "/user/settings" });
     }
   }
 };
@@ -109,7 +125,7 @@ export default {
         .el-dropdown {
           position: absolute;
           right: 0;
-          top: 5px;
+          top: 10px;
           img {
             border-radius: 50%;
             cursor: pointer;

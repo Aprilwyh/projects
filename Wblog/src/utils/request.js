@@ -44,7 +44,7 @@ service.interceptors.response.use(response => {
   }
 }, error => {
   Message({
-    message: '未知错误',
+    message: '登录连接超时（后台不能连接，请联系系统管理员）',
     type: 'error',
     duration: 5 * 1000
   })

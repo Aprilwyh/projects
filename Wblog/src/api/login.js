@@ -18,3 +18,14 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUserInfo(key) {
+  debugger;
+
+  return request({
+    url: '/file/download', // TODO 后台地址
+    method: 'post',
+    key
+    // params: { token }
+  })
+}

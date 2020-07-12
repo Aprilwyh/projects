@@ -1,11 +1,12 @@
-import { userLogin, logout } from '@/api/login'
-import { getToken, setToken, removeToken, getUser, setUser } from '@/utils/auth'
+import { userLogin, logout, getUserInfo } from '@/api/login'
+import { getToken, setToken, removeToken, getUser, setUser, setAvatar, getAvatar } from '@/utils/auth'
 
 const user = {
   state: {
     // 存储token
     myToken: getToken(),
-    userName: getUser()
+    userName: getUser(),
+    avatar: getAvatar()
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -13,6 +14,9 @@ const user = {
     },
     SET_NAME: (state, userName) => {
       state.userName = userName
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
     }
   },
   actions: {
@@ -42,6 +46,20 @@ const user = {
           reject(error)
         })
 
+      })
+    },
+    // 获取用户信息
+    getUserInfo({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getUserInfo(state.avatar).then(response => {
+          debugger;
+          const data = response.data.key
+          commit('SET_AVATAR', data)
+          setAvatar(data.avatar)
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
       })
     }
   }
