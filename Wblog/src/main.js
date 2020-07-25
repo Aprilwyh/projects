@@ -8,6 +8,8 @@ import router from './router'
 import axios from 'axios'
 import store from './store'
 
+import './permission' // permission control
+
 Vue.config.productionTip = false
 import '../src/css/base.css'; // 全局应用样式
 import 'font-awesome/css/font-awesome.min.css'

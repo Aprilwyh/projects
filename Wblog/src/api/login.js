@@ -19,13 +19,9 @@ export function logout() {
   })
 }
 
-export function getUserInfo(key) {
-  debugger;
-
+export function getUserInfo() {
   return request({
-    url: '/file/download', // TODO 后台地址
-    method: 'post',
-    key
-    // params: { token }
+    url: '/user/getUserInfo',
+    method: 'post'
   })
 }

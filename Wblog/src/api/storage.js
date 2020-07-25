@@ -9,12 +9,12 @@ import request from '@/utils/request'
 }
 
 export function updateStorage(data) {
-  return request({
+  return request({ 
     url: '/storage/update',
     method: 'post',
     data
   })
 } */
 
-const uploadPath = '/api' + '/auth/uploadAvatar'
+const uploadPath = '/api' + '/auth/uploadAvatar' // 上传地址
 export { uploadPath }

@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': { //此处并非和url一致
-        target: 'http://192.168.1.13:8080/', // 后台访问地址
+        target: 'http://192.168.1.4:8080/', // 后台访问地址
         changeOrigin: true,  // 允许跨域
         pathRewrite: {
           '^/api': '' // 外面的api只是一个区分请求的别名，所以这里的api目的是匹配上再给去掉

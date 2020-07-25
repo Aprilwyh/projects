@@ -1,30 +1,16 @@
 const TokenKey = 'myToken'
 
 export function getToken() {
-  return localStorage.getItem(TokenKey)
+  return sessionStorage.getItem(TokenKey)
+  // return localStorage.getItem(TokenKey)
 }
 
 export function setToken(token) {
-  return localStorage.setItem(TokenKey, token)
+  return sessionStorage.setItem(TokenKey, token)
+  // return localStorage.setItem(TokenKey, token)
 }
 
 export function removeToken() {
-  return localStorage.removeItem(TokenKey)
-}
-
-export function getUser() {
-  // return sessionStorage.getItem('username')
-  return localStorage.getItem('username')
-}
-export function setUser(username) {
-  // return sessionStorage.setItem("username", username);
-  return localStorage.setItem("username", username);
-}
-
-export function setAvatar(avatar) {
-  return localStorage.setItem(avatar, avatar)
-}
-
-export function getAvatar(avatar) {
-  return localStorage.getItem(avatar, avatar)
+  return sessionStorage.removeItem(TokenKey)
+  // return localStorage.removeItem(TokenKey)
 }

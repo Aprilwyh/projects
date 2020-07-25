@@ -69,7 +69,7 @@
 
 <script>
 import { uploadPath } from "@/api/storage";
-import { getToken, setAvatar } from "@/utils/auth";
+import { getToken } from "@/utils/auth";
 export default {
   data() {
     return {
@@ -100,11 +100,10 @@ export default {
         message: res.msg,
         type: "success"
       });
-      setAvatar(res.data ? res.data : "");
-      this.$store.dispatch("getUserInfo").then(res => {
-        this.imageUrl = res;
-      });
-      // this.imageUrl = URL.createObjectURL(file.raw);
+      if (res.data) {
+        this.imageUrl = "/api" + res.data;
+        this.$store.getters.info.avatar = res.data;
+      }
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";

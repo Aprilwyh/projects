@@ -18,7 +18,7 @@
         type="password"
         v-model="ruleForm.password"
         auto-complete="off"
-        @keyup.enter.native="submitForm"
+        @keyup.enter.native="submitForm('ruleForm')"
       ></el-input>
     </el-form-item>
     <el-form-item>
@@ -62,21 +62,21 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid && !this.loading) {
           this.loading = true;
-          this.$store
-            .dispatch("userLogin", this.ruleForm)
-            .then(() => {
-              this.loading = false;
+          this.$store.dispatch("userLogin", this.ruleForm).then(res => {
+            this.loading = false;
+            if (res.data.status === 0) {
               this.$message({
-                message: "登录成功",
+                message: res.data.msg,
                 type: "success"
               });
               this.$router.push("home");
-            })
-            .catch(err => {
-              this.loading = false;
-              this.$message.error("账号或者密码错误");
-              // this.$message.error(err);
-            });
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error"
+              });
+            }
+          });
         } else {
           console.log("error submit!!");
           return false;

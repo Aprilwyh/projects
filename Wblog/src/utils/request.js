@@ -11,7 +11,6 @@ const service = axios.create({
 
 // request拦截器，在请求头中加入token
 service.interceptors.request.use(config => {
-  console.log(store)
   if (store.state.user.myToken) {
     config.headers.myToken = store.state.user.myToken
   }
@@ -23,7 +22,7 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(response => {
   const res = response.data
-  if (res.errno === 501) {
+  if (res.status === 501) {
     MessageBox.alert('系统未登录，请您登录', '错误', {
       confirmButtonText: '确定',
       type: 'error'
@@ -33,8 +32,8 @@ service.interceptors.response.use(response => {
       })
     })
     return Promise.reject('error')
-  } else if (res.errno === 502) {
-    MessageBox.alert('系统内部错误，请联系管理员维护', '错误', {
+  } else if (res.status === 403) {
+    MessageBox.alert('未授权，没有权限', '错误', {
       confirmButtonText: '确定',
       type: 'error'
     })

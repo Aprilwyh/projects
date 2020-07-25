@@ -15,9 +15,9 @@
         </el-col>
         <el-col :span="5">
           <div class="avatar" v-if="$store.getters.token">
-            <span>欢迎你，{{ $store.getters.username }}</span>
+            <span>欢迎你，{{ $store.getters.info.username }}</span>
             <el-dropdown @command="select">
-              <img :src="$store.getters.avatar" width="40px" height="40px" />
+              <img :src="'/api'+ imgUrl" width="40px" height="40px" />
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="settings">
                   <i class="el-icon-setting"></i>
@@ -48,9 +48,14 @@
 export default {
   name: "myHeader",
   data() {
-    return {
-      avatarDef: require("../assets/avatar-def.jpg") // 获取默认头像
-    };
+    return {};
+  },
+  computed: {
+    imgUrl() {
+      return this.$store.getters.info.avatar
+        ? this.$store.getters.info.avatar
+        : "";
+    }
   },
   methods: {
     select(command) {
@@ -70,6 +75,7 @@ export default {
           message: "您已注销",
           type: "success"
         });
+        this.$router.push("/home");
       });
     },
     // 基本设置

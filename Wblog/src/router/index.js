@@ -31,16 +31,7 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login,
-      beforeEach: (to, from, next) => {
-        // 获取是否有token
-        let token = localStorage.getItem('myToken')
-        if (to.path === '/login' || token) {
-          next()
-        } else {
-          next('/login')
-        }
-      }
+      component: login
     },
     {
       path: '/register',
