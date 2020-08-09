@@ -3,8 +3,12 @@
 </template>
 
 <script>
+import img from "./assets/images/bg.png";
 export default {
-  name: "App"
+  name: "App",
+  created() {
+    alert(img);
+  }
 };
 </script>
 

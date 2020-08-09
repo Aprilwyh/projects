@@ -19,6 +19,9 @@ module.exports = {
     rules: [{
       test: /\.vue$/, // 正则匹配.vue后缀名文件
       loader: 'vue-loader' // 匹配到了.vue文件就用vue-loader进行打包
+    }, {
+      test: /\.(jpg|jpeg|png|svg)$/,
+      loader: 'file-loader'
     }]
   },
   // 插件
