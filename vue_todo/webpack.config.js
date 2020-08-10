@@ -21,7 +21,14 @@ module.exports = {
       loader: 'vue-loader' // 匹配到了.vue文件就用vue-loader进行打包
     }, {
       test: /\.(jpg|jpeg|png|svg)$/,
-      loader: 'file-loader'
+      loader: 'url-loader',
+      options: {
+        name: '[name].[ext]', // 命名规则：原文件名.原文件后缀。详细见官网
+        limit: 2048
+      }
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
     }]
   },
   // 插件

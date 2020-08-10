@@ -4,6 +4,7 @@
 
 <script>
 import img from "./assets/images/bg.png";
+import "./assets/styles/test.css";
 export default {
   name: "App",
   created() {
