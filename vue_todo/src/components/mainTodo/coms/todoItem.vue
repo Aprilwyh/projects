@@ -1,13 +1,22 @@
 <template>
-  <div class="todo-item">
-    <input type="checkbox" />
-    <label>todo1</label>
-    <button></button>
+  <!-- 样式绑定 -->
+  <div :class="['todo-item', todo.completed ? 'completed' : '']">
+    <input type="checkbox" v-model="todo.completed" />
+    <label>{{ todo.content }}</label>
+    <button @click="delItem"></button>
   </div>
 </template>
 <script>
   export default {
-    name: 'todoItem'
+    name: 'todoItem',
+    props: {
+      todo: Object // 指定从父组件传递过来的 todo 类型为 Object
+    },
+    methods: {
+      delItem() {
+        this.$emit('del', this.todo.id)
+      }
+    }
   }
 </script>
 <style lang="stylus" scoped>
@@ -19,6 +28,7 @@
     justify-content: space-between
     padding: 10px
     font-size: 24px
+    border-top: 1px solid rgba(0, 0, 0, 0.1)
 
     &:hover
       button:after
