@@ -1,23 +1,41 @@
 <template>
   <div class="todo-info">
-    <span class="total">1 item left</span>
+    <span class="total">{{ total }} item left</span>
     <div class="tabs">
-      <a v-for="(item, index) in states" :key="index">{{ item }}</a>
+      <a
+        :class="['btn', 'primary', 'border', state == item ? 'actived' : '']"
+        v-for="(item, index) in states"
+        :key="index"
+        @click="toggleState(item)"
+      >{{ item }}</a>
     </div>
-    <button class="clear">Clear Completed</button>
+    <button class="btn info" @click="clearCompleted">Clear Completed</button>
   </div>
 </template>
 <script>
   export default {
+    name: 'todoInfo',
+    props: { total: Number },
     data() {
       return {
-        states: ['all', 'active', 'completed']
+        states: ['all', 'active', 'completed'],
+        state: 'all'
+      }
+    },
+    methods: {
+      toggleState(state) {
+        this.state = state
+        this.$emit('toggle', state)
+      },
+      clearCompleted() {
+        this.$emit('clear')
       }
     }
   }
 </script>
 <style lang="stylus" scoped>
   @import '~styles/theme.styl'
+  @import '~styles/mixins.styl'
 
   .todo-info
     display: flex
@@ -35,21 +53,12 @@
       justify-content: space-between
       width: 200px
 
-      a
-        padding: 0 10px
-        border: 1px solid $lightred
-        border-radius: 5px
+    .btn.primary.border
+      primaryBorderBtn()
 
-        &.actived
-          background-color: $lightred
-          color: #fff
+      &.actived
+        primaryBtn()
 
-    .clear
-      padding: 0 10px
-      background-color: $green
-      border-radius: 5px
-      color: #fff
-      appearance: none
-      border: none
-      outline: none
+    .btn.info
+      infoBtn()
 </style>
