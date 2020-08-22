@@ -2,11 +2,15 @@
   <div>
     <h3>Child</h3>
     {{msg}}
-    <button @click="passMsg">点击</button>
+    <br />
+    {{childVal}}
+    <br />
+    <button @click="passMsg">父子传递</button>
   </div>
 </template>
 
 <script>
+  import bus from '../util/bus.js'
   export default {
     props: {
       msg: {
@@ -14,10 +18,21 @@
         default: ''
       }
     },
+    data() {
+      return {
+        childVal: ''
+      }
+    },
     methods: {
       passMsg() {
         this.$emit('showMsg', 'from Child')
       }
+    },
+    mounted() {
+      console.log('attrs', this.$attrs)
+      bus.$on('msg', val => {
+        this.childVal = val
+      })
     }
   }
 </script>
