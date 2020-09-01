@@ -1,12 +1,13 @@
 <template>
   <el-menu
-    default-active="2"
+    :default-active="path"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
     background-color="#6d7993"
     text-color="#fff"
     active-text-color="#ffd04b"
+    router
   >
     <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="'el-icon-' + item.icon"></i>
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      path: '',
       asideMenu: [
         {
           path: '/',
