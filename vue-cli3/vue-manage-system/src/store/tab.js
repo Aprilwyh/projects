@@ -1,7 +1,8 @@
 export default {
   state: {
-    menu: [],
+    isCollapse: false,
     currentMenu: null,
+    menu: [],
     // 方便传递数据
     tabsList: [
       {
@@ -28,6 +29,9 @@ export default {
       // 如果在 tabsList 中找到就删除
       let result = state.tabsList.findIndex(item => item.name === val.name)
       state.tabsList.splice(result, 1)
+    },
+    collapseMenu(state) {
+      state.isCollapse = !state.isCollapse
     }
   },
   actions: {}

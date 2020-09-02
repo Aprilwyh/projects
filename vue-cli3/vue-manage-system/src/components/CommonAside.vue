@@ -4,10 +4,11 @@
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
-    background-color="#6d7993"
+    background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
     router
+    :collapse="isCollapse"
   >
     <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="'el-icon-' + item.icon"></i>
@@ -35,6 +36,9 @@ export default {
     },
     hasChildren() {
       return this.asideMenu.filter(item => item.children)
+    },
+    isCollapse() {
+      return this.$store.state.tab.isCollapse
     }
   },
   data() {
@@ -96,5 +100,9 @@ export default {
 .el-menu {
   height: 100%;
   border-right: none;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>

@@ -8,6 +8,7 @@
       :disable-transitions="false"
       @close="handleClose(tag)"
       @click="changeMenu(tag)"
+      :effect="$route.name === tag.name ? 'dark' : 'light'"
     >
       {{ tag.label }}
     </el-tag>
@@ -49,6 +50,7 @@ export default {
   padding: 20px;
   .el-tag {
     margin-right: 15px;
+    cursor: pointer;
   }
 }
 </style>

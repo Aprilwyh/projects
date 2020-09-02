@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="l-content">
-      <el-button type="primary" icon="el-icon-menu" size="mini"></el-button>
+      <el-button plain icon="el-icon-menu" size="mini" @click="collapseMenu"></el-button>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="current.path" v-if="current">
@@ -35,6 +35,11 @@ export default {
     return {
       userImg: require('../assets/images/avatar_default.jpg')
     }
+  },
+  methods: {
+    collapseMenu() {
+      this.$store.commit('collapseMenu')
+    }
   }
 }
 </script>
@@ -62,8 +67,15 @@ header {
 }
 </style>
 <style lang="scss">
-.el-breadcrumb__inner a,
-.el-breadcrumb__inner.is-link {
-  color: #fff;
+.el-breadcrumb__item {
+  .el-breadcrumb__inner {
+    color: #666;
+    font-weight: 400;
+  }
+  &:last-child {
+    .el-breadcrumb__inner {
+      color: #fff;
+    }
+  }
 }
 </style>
