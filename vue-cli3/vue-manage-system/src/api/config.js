@@ -24,3 +24,5 @@ service.interceptors.response.use(
   },
   err => console.log(err)
 )
+
+export default service
