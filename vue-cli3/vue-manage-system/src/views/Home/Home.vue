@@ -14,7 +14,11 @@
           <p>上次登录地点：<span>北京</span></p>
         </div>
       </el-card>
-      <el-card shadow="hover" style="height: 522px; margin-top: 20px;">111</el-card>
+      <el-card shadow="hover" style="height:540px; margin-top: 20px;">
+        <el-table :data="tableData">
+          <el-table-column show-overflow-tooltip v-for="(val, key) in tableLabel" :key="key" :prop="key" :label="val"> </el-table-column>
+        </el-table>
+      </el-card>
     </el-col>
     <el-col :span="16">
       <div class="num">
@@ -83,13 +87,27 @@ export default {
           icon: 's-goods',
           color: '#5ab1ef'
         }
-      ]
+      ],
+      tableData: [],
+      tableLabel: {
+        name: '课程',
+        todayBuy: '今日购买',
+        monthBuy: '本月购买',
+        totalBuy: '总购买'
+      }
     }
   },
-  mounted() {
-    this.$http.get('/home/getData').then(res => {
-      console.log(res.data)
-    })
+  methods: {
+    getTableData() {
+      this.$http.get('/home/getData').then(res => {
+        res = res.data
+        this.tableData = res.data.tableData
+        console.log(this.tableData)
+      })
+    }
+  },
+  created() {
+    this.getTableData()
   }
 }
 </script>
