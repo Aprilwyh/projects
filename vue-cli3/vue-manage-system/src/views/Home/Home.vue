@@ -31,14 +31,14 @@
         </el-card>
       </div>
       <el-card shadow="hover">
-        <div style="height:280px"></div>
+        <echart style="height:280px" :chartData="echartData.order"></echart>
       </el-card>
       <div class="graph">
         <el-card shadow="hover">
-          <div style="height: 260px"></div>
+          <echart style="height: 260px"></echart>
         </el-card>
         <el-card shadow="hover">
-          <div style="height: 260px"></div>
+          <echart style="height: 260px"></echart>
         </el-card>
       </div>
     </el-col>
@@ -46,7 +46,11 @@
 </template>
 
 <script>
+import Echart from '../../components/Echart'
 export default {
+  components: {
+    Echart
+  },
   data() {
     return {
       userImg: require('../../assets/images/user.jpg'),
@@ -94,6 +98,20 @@ export default {
         todayBuy: '今日购买',
         monthBuy: '本月购买',
         totalBuy: '总购买'
+      },
+      // Echarts 数据
+      echartData: {
+        order: {
+          xData: [],
+          series: []
+        },
+        user: {
+          xData: [],
+          series: []
+        },
+        video: {
+          series: []
+        }
       }
     }
   },
@@ -102,7 +120,18 @@ export default {
       this.$http.get('/home/getData').then(res => {
         res = res.data
         this.tableData = res.data.tableData
-        console.log(this.tableData)
+        console.log(res.data)
+        // 订单折线图
+        const order = res.data.orderData
+        this.echartData.order.xData = order.data
+        let keyArray = Object.keys(order.data[0])
+        keyArray.forEach(key => {
+          this.echartData.order.series.push({
+            name: key === 'wechat' ? '小程序' : key,
+            data: order.data.map(item => item[key]),
+            type: 'line'
+          })
+        })
       })
     }
   },
