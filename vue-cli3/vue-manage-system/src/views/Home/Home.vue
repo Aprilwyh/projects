@@ -35,10 +35,10 @@
       </el-card>
       <div class="graph">
         <el-card shadow="hover">
-          <echart style="height: 260px"></echart>
+          <echart style="height: 260px" :chartData="echartData.user"></echart>
         </el-card>
         <el-card shadow="hover">
-          <echart style="height: 260px"></echart>
+          <echart style="height: 260px" :chartData="echartData.video" :isAxisChart="false"></echart>
         </el-card>
       </div>
     </el-col>
@@ -123,7 +123,7 @@ export default {
         console.log(res.data)
         // 订单折线图
         const order = res.data.orderData
-        this.echartData.order.xData = order.data
+        this.echartData.order.xData = order.date
         let keyArray = Object.keys(order.data[0])
         keyArray.forEach(key => {
           this.echartData.order.series.push({
@@ -131,6 +131,24 @@ export default {
             data: order.data.map(item => item[key]),
             type: 'line'
           })
+        })
+        // 用户柱状图
+        this.echartData.user.xData = res.data.userData.map(item => item.date)
+        this.echartData.user.series.push({
+          name: '新增用户',
+          data: res.data.userData.map(item => item.new),
+          type: 'bar'
+        })
+        this.echartData.user.series.push({
+          name: '活跃用户',
+          data: res.data.userData.map(item => item.active),
+          type: 'bar',
+          barGap: 0
+        })
+        // 视频饼图
+        this.echartData.video.series.push({
+          data: res.data.videoData,
+          type: 'pie'
         })
       })
     }

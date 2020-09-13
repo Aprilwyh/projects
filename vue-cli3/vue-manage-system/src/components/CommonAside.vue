@@ -10,6 +10,8 @@
     router
     :collapse="isCollapse"
   >
+    <h3 v-show="!isCollapse">W 后台管理系统</h3>
+    <h3 v-show="isCollapse">W</h3>
     <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="'el-icon-' + item.icon"></i>
       <span slot="title">{{ item.label }}</span>
@@ -100,6 +102,11 @@ export default {
 .el-menu {
   height: 100%;
   border-right: none;
+  h3 {
+    color: #fff;
+    text-align: center;
+    line-height: 48px;
+  }
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
