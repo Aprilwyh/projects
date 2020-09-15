@@ -6,9 +6,7 @@
         <el-button type="primary">搜索</el-button>
       </common-form>
     </div>
-    <div class="manage-content">
-      <common-table></common-table>
-    </div>
+    <common-table :tableLabel="tableLabel" :tableData="tableData" :config="config"></common-table>
   </div>
 </template>
 
@@ -30,8 +28,59 @@ export default {
           model: 'keyword',
           label: ''
         }
-      ]
+      ],
+      tableData: [],
+      tableLabel: [
+        {
+          prop: 'name',
+          label: '姓名'
+        },
+        {
+          prop: 'addr',
+          label: '地址'
+        },
+        {
+          prop: 'age',
+          label: '年龄'
+        },
+        {
+          prop: 'birth',
+          label: '出生日期'
+        },
+        {
+          prop: 'sexLabel',
+          label: '性别'
+        }
+      ],
+      config: {
+        page: 1,
+        total: 30,
+        loading: false
+      }
     }
+  },
+  methods: {
+    getList() {
+      this.config.loading = true
+      this.$http
+        .get('/api/user/getUser', {
+          params: {
+            page: this.config.page
+          }
+        })
+        .then(res => {
+          this.tableData = res.data.list.map(item => {
+            // 对性别数据二次处理
+            item.sexLabel = item.sex === 0 ? '女' : '男'
+            return item
+          })
+          this.config.total = res.data.count
+          this.config.loading = false
+        })
+    }
+  },
+  created() {
+    this.getList()
   }
 }
 </script>
