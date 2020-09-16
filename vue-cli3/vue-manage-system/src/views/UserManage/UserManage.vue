@@ -6,7 +6,7 @@
         <el-button type="primary">搜索</el-button>
       </common-form>
     </div>
-    <common-table :tableLabel="tableLabel" :tableData="tableData" :config="config"></common-table>
+    <common-table :tableLabel="tableLabel" :tableData="tableData" :config="config" @changePage="getList"></common-table>
   </div>
 </template>
 
