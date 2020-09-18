@@ -31,7 +31,9 @@ export default {
     config: Object
   },
   methods: {
-    handleEdit() {},
+    handleEdit(row) {
+      this.$emit('edit', row)
+    },
     handleDelete() {},
     changePage(page) {
       this.$emit('changePage', page)
