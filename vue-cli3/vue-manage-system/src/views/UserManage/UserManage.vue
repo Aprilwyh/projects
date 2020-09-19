@@ -8,12 +8,12 @@
       </div>
     </el-dialog>
     <div class="manage-header">
-      <el-button type="primary">+ 新增</el-button>
+      <el-button type="primary" @click="addUser">+ 新增</el-button>
       <common-form inline :form="searchForm" :formLabel="formLabel">
-        <el-button type="primary">搜索</el-button>
+        <el-button type="primary" @click="getList">搜索</el-button>
       </common-form>
     </div>
-    <common-table :tableLabel="tableLabel" :tableData="tableData" :config="config" @changePage="getList" @edit="editUser"></common-table>
+    <common-table :tableLabel="tableLabel" :tableData="tableData" :config="config" @changePage="getList" @edit="editUser" @del="delUser"></common-table>
   </div>
 </template>
 
@@ -115,7 +115,8 @@ export default {
       this.$http
         .get('/api/user/getUser', {
           params: {
-            page: this.config.page
+            page: this.config.page,
+            name: this.searchForm.keyword ? this.searchForm.keyword : ''
           }
         })
         .then(res => {
@@ -133,7 +134,55 @@ export default {
       this.isShow = true
       this.operateForm = row
     },
-    confirm() {}
+    confirm() {
+      if (this.operateType === 'edit') {
+        this.$http.post('/api/user/edit', this.operateForm).then(res => {
+          console.log(res)
+          this.isShow = false
+          this.getList()
+        })
+      } else if (this.operateType === 'add') {
+        this.$http.post('/api/user/add', this.operateForm).then(res => {
+          console.log(res)
+          this.isShow = false
+          this.getList()
+        })
+      }
+    },
+    delUser(row) {
+      this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          let id = row.id
+          this.$http
+            .get('/api/user/del', {
+              params: {
+                id
+              }
+            })
+            .then(res => {
+              console.log(res.data)
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.getList()
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    },
+    addUser() {
+      this.operateType = 'add'
+      this.isShow = true
+    }
   },
   created() {
     this.getList()

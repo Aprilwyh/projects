@@ -17,8 +17,21 @@ Vue.use(ElementUI)
 // 挂载到 Vue 的原型上面
 Vue.prototype.$http = http
 
+router.beforeEach((to, from, next) => {
+  store.commit('getToken')
+  let token = store.state.user.token
+  if (!token && to.name !== 'login') {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+})
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created() {
+    store.commit('addMenu', router)
+  }
 }).$mount('#app')

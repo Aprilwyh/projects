@@ -34,7 +34,9 @@ export default {
     handleEdit(row) {
       this.$emit('edit', row)
     },
-    handleDelete() {},
+    handleDelete(row) {
+      this.$emit('del', row)
+    },
     changePage(page) {
       this.$emit('changePage', page)
     }
@@ -52,5 +54,11 @@ export default {
     bottom: 0;
     right: 20px;
   }
+}
+</style>
+<style lang="scss">
+.el-table td,
+.el-table th {
+  text-align: center;
 }
 </style>

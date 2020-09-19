@@ -1,8 +1,9 @@
+import Cookie from 'js-cookie'
 export default {
   state: {
     isCollapse: false,
     currentMenu: null,
-    menu: [],
+    menu: [], // 路由菜单
     // 方便传递数据
     tabsList: [
       {
@@ -14,6 +15,41 @@ export default {
     ]
   },
   mutations: {
+    setMenu(state, val) {
+      state.menu = val
+      Cookie.set('menu', JSON.stringify(val))
+    },
+    clearMenu(state) {
+      state.menu = []
+      Cookie.remove('menu')
+    },
+    addMenu(state, router) {
+      if (!Cookie.get('menu')) return
+      let menu = JSON.parse(Cookie.get('menu'))
+      state.menu = menu
+      let currentMenu = [
+        {
+          path: '/',
+          component: () => import(`@/views/Main.vue`),
+          children: []
+        }
+      ]
+      menu.forEach(item => {
+        if (item.children) {
+          // 有子路由
+          item.children = item.children.map(item => {
+            item.component = () => import(`@/views/${item.url}`)
+            return item
+          })
+          currentMenu[0].children.push(...item.children)
+        } else {
+          // 无子路由
+          item.component = () => import(`@/views/${item.url}`)
+          currentMenu[0].children.push(item)
+        }
+      })
+      router.addRoutes(currentMenu)
+    },
     selectMenu(state, val) {
       if (val.name !== 'home') {
         state.currentMenu = val
