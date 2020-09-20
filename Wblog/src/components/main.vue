@@ -48,7 +48,7 @@
           </el-card>
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span>这里可作为广告区域</span>
+              <span>统计图</span>
             </div>
             <div>广告区域</div>
           </el-card>

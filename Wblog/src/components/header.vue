@@ -80,7 +80,7 @@ export default {
     },
     // 基本设置
     settings() {
-      this.$router.push({ path: "/user/settings" });
+      this.$router.push({path: "/user/settings"});
     }
   }
 };
