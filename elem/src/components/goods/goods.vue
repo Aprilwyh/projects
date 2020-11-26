@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <div class="menu">
+    <div class="menu" ref="menuWrapper">
       <ul>
         <li v-for="item in goods" :key="item.index" class="menu-item">
           <span class="text border-1px">
@@ -9,7 +9,7 @@
         </li>
       </ul>
     </div>
-    <div class="foods">
+    <div class="foods" ref="foodsWrapper">
       <ul>
         <li v-for="item in goods" :key="item.id" class="food-list">
           <h1 class="title">{{item.name}}</h1>
@@ -38,11 +38,29 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
+// import BetterScroll from 'better-scroll';
+import BScroll from 'better-scroll';
+
+/* let bs = new BetterScroll('.wrapper', {
+  movable: true,
+  zoom: true
+}) */
+
+/* import BScroll from '@better-scroll/core'
+
+let bs = new BScroll('.wrapper', {}) */
+
+// const ERR_OK = 0;
 export default {
+  /* props: {
+    seller: {
+      type: Object
+    }
+  }, */
   data() {
     return {
-      goods: {}
+      goods: []
     };
   },
   props: ['seller'],
@@ -50,8 +68,20 @@ export default {
     // 动态展示不同的class
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     this.$axios.get('../api/data.json').then((result) => {
+      // result = result.body;
+      // if (result.errno === ERR_OK) {
       this.goods = result.data.goods;
+      this.$nextTick(() => {
+        this._initScroll();
+      });
+      // }
     });
+  },
+  methods: {
+    _initScroll() {
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {});
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {});
+    }
   }
 };
 </script>
